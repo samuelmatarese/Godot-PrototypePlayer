@@ -1,3 +1,21 @@
-[gd_scene format=3 uid="uid://c28cdesy3bksf"]
+[gd_scene load_steps=3 format=3 uid="uid://c28cdesy3bksf"]
+
+[ext_resource type="Script" path="res://GameScenes/Main.cs" id="1_2ijlj"]
+[ext_resource type="PackedScene" uid="uid://t5a3wxq4vduv" path="res://ObjectScenes/Player/BasePlayer.tscn" id="1_4a4g8"]
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_2ijlj")
+
+[node name="Floor" type="CSGBox3D" parent="."]
+use_collision = true
+size = Vector3(4.62799, 0.453125, 6.45239)
+
+[node name="RigidBody3D" parent="." instance=ExtResource("1_4a4g8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38582, 0)
+CanMove = true
+Speed = 5.0
+JumpSpeed = 20.0
+MouseSensivity = 0.2
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.882497, -1.31502e-08, -0.470319, 0.243771, 0.855192, 0.457407, 0.402213, -0.518311, 0.754704, 0, 3.78132, 5.58562)
