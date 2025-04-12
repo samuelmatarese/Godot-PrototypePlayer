@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c28cdesy3bksf"]
 
-[ext_resource type="Script" path="res://GameScenes/Main.cs" id="1_2ijlj"]
+[ext_resource type="Script" uid="uid://b74m5lukiqhii" path="res://GameScenes/Main.cs" id="1_2ijlj"]
 [ext_resource type="PackedScene" uid="uid://t5a3wxq4vduv" path="res://ObjectScenes/Player/BasePlayer.tscn" id="1_4a4g8"]
 
 [node name="Node3D" type="Node3D"]
