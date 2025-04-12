@@ -47,7 +47,6 @@ jobs:
     - name: Prep packages
       run: dotnet nuget add source --username samuelmatarese --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/samuelmatarese/index.json"
     - name: Push package to GitHub packages 
-      if: startsWith(github.ref, 'refs/tags/') 
       run: dotnet nuget push ./nugetPackage/*.nupkg --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }}  --source "github"
     
     #Create release
