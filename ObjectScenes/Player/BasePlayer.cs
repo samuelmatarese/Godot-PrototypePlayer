@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Diagnostics;
 
 public partial class BasePlayer : CharacterBody3D
 {
@@ -10,6 +9,7 @@ public partial class BasePlayer : CharacterBody3D
 	[Export] public bool CanSpectate { get; set; }
 	[Export] public bool CanRun { get; set; }
 	[Export] public float Speed { get; set; } = 5;
+	[Export] public float RunMultiplier { get; set; } = 1.5f;
 	[Export] public float JumpSpeed { get; set; } = 100;
 	[Export] public float MouseSensivity { get; set; } = 0.5f;
 	[Export] public float MaxUpwardRotation { get; set; } = 50;
@@ -18,6 +18,7 @@ public partial class BasePlayer : CharacterBody3D
 	[Export] public string MoveBackwardsAction { get; set; } = "MoveBackwards";
 	[Export] public string MoveLeftAction { get; set; } = "MoveLeft";
 	[Export] public string MoveRightAction { get; set; } = "MoveRight";
+	[Export] public string RunAction { get; set; } = "Run";
 	[Export] public string JumpAction { get; set; } = "Jump";
 
 	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -32,12 +33,8 @@ public partial class BasePlayer : CharacterBody3D
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 
-		var camera = GetNodeOrNull<Camera3D>("PlayerView");
-
-		if (camera == null)
-		{
-			throw new ArgumentException("Camera node could not be found.");
-		}
+		var camera = GetNodeOrNull<Camera3D>("PlayerView")
+			?? throw new ArgumentException("Camera node could not be found.");
 
 		_playerView = camera;
 	}
@@ -82,27 +79,23 @@ public partial class BasePlayer : CharacterBody3D
 
 		if (CanMove)
 		{
-			if (Input.IsActionPressed(MoveForwardAction))
-			{
-				direction.Z -= 1;
-			}
-
-			if (Input.IsActionPressed(MoveBackwardsAction))
-			{
-				direction.Z += 1;
-			}
-
-			if (Input.IsActionPressed(MoveLeftAction))
-			{
-				direction.X -= 1;
-			}
-
-			if (Input.IsActionPressed(MoveRightAction))
-			{
-				direction.X += 1;
-			}
+			direction = GetMovementInput(direction);
 		}
 
+		GetVerticalVelocity(delta);
+
+		var relativeDirection = GlobalTransform.Basis * direction;
+		Velocity = new Vector3(relativeDirection.X, _verticalVelocity, relativeDirection.Z);
+		MoveAndSlide();
+
+		if (IsOnFloor())
+		{
+			_verticalVelocity = 0;
+		}
+	}
+
+	private void GetVerticalVelocity(double delta)
+	{
 		if (Input.IsActionPressed(JumpAction) && IsOnFloor() && CanJump)
 		{
 			_verticalVelocity = JumpSpeed;
@@ -116,22 +109,44 @@ public partial class BasePlayer : CharacterBody3D
 		{
 			_verticalVelocity -= Gravity * 0.1f * (float)delta;
 		}
+	}
 
-		if (direction.Length() > 0)
+	private Vector3 GetMovementInput(Vector3 currentMovement)
+	{
+		if (Input.IsActionPressed(MoveForwardAction))
 		{
-			direction = direction.Normalized();
+			currentMovement.Z -= 1;
 		}
 
-		direction.X *= Speed;
-		direction.Z *= Speed;
-
-		var relativeDirection = GlobalTransform.Basis * direction;
-		Velocity = new Vector3(relativeDirection.X, _verticalVelocity, relativeDirection.Z);
-		MoveAndSlide();
-
-		if (IsOnFloor())
+		if (Input.IsActionPressed(MoveBackwardsAction))
 		{
-			_verticalVelocity = 0;
+			currentMovement.Z += 1;
 		}
+
+		if (Input.IsActionPressed(MoveLeftAction))
+		{
+			currentMovement.X -= 1;
+		}
+
+		if (Input.IsActionPressed(MoveRightAction))
+		{
+			currentMovement.X += 1;
+		}
+
+		if (currentMovement.Length() > 0)
+		{
+			currentMovement = currentMovement.Normalized();
+			currentMovement.X *= CalculateSpeed();
+			currentMovement.Z *= CalculateSpeed();
+		}
+
+		return currentMovement;
+	}
+
+	private float CalculateSpeed()
+	{
+		return Input.IsActionPressed(RunAction) && CanRun
+			? Speed * RunMultiplier
+			: Speed;
 	}
 }
