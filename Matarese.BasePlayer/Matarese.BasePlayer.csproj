@@ -7,10 +7,8 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
   </PropertyGroup>
 
-   <ItemGroup>
-    <Reference Include="GodotSharp">
-      <HintPath>../.godot/mono/temp/bin/Debug/GodotSharp.dll</HintPath>
-    </Reference>
+  <ItemGroup>
+    <PackageReference Include="GodotSharp" Version="4.0.0" />
   </ItemGroup>
 
 </Project>
