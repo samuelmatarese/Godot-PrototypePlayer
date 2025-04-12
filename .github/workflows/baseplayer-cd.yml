@@ -45,8 +45,8 @@ jobs:
         path: ./nugetPackage
     - name: Prep packages
       run: dotnet nuget add source --username samuelmatarese --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/samuelmatarese/index.json"
-    - name: Push package to GitHub packages 
-      run: dotnet nuget push ./nugetPackage/*.nupkg --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }}  --source "github" --visibility public
+    - name: Push package to Nuget packages 
+      run: dotnet nuget push ./nugetPackage/*.nupkg --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }}  --source "nuget.org"
     
     #Create release
     - name: Create Release
