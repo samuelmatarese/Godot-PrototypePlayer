@@ -25,7 +25,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build and Pack NuGet package
-      run: dotnet publish Matarese.BasePlayer/Matarese.BasePlayer.csproj -p:Version='${{ steps.get_tag.outputs.tag }}' -c Release
+      run: dotnet pack Matarese.BasePlayer/Matarese.BasePlayer.csproj -p:Version='${{ steps.get_tag.outputs.tag }}' -c Release
     - name: Upload NuGet package to GitHub
       uses: actions/upload-artifact@v4
       with:
