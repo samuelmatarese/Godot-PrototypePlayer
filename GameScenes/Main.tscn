@@ -13,8 +13,8 @@ size = Vector3(4.62799, 0.453125, 6.45239)
 [node name="RigidBody3D" parent="." instance=ExtResource("1_4a4g8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38582, 0)
 CanMove = true
+CanJump = true
 CanRun = true
-Speed = 5.0
 RunMultiplier = 2.0
 JumpSpeed = 20.0
 MouseSensivity = 0.2

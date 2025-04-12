@@ -1,14 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://t5a3wxq4vduv"]
 
-[ext_resource type="Script" uid="uid://uuj8lsym7uns" path="res://ObjectScenes/Player/BasePlayer.cs" id="1_kkgt1"]
+[ext_resource type="Script" uid="uid://b0pxh4kwi6kkx" path="res://ObjectScenes/Player/DemoPlayer.cs" id="1_demi6"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_k3na4"]
 
 [node name="MainNode" type="CharacterBody3D"]
-script = ExtResource("1_kkgt1")
-CanJump = true
-Speed = 0.0
-JumpSpeed = 1000.0
+script = ExtResource("1_demi6")
 
 [node name="PlayerView" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25709)

@@ -3,4 +3,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
+
+    <ItemGroup>
+         <ProjectReference Include = "Matarese.BasePlayer/Matarese.BasePlayer.csproj" />
+    </ItemGroup>
 </Project>

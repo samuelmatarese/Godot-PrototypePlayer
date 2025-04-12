@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+   <ItemGroup>
+    <Reference Include="GodotSharp">
+      <HintPath>../.godot/mono/temp/bin/Debug/GodotSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

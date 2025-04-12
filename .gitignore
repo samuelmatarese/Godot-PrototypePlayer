@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+Matarese.BasePlayer/bin
+Matarese.BasePlayer/obj
